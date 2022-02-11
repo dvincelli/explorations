@@ -19,6 +19,7 @@
     "yjs": "^13.5.27"
   },
   "devDependencies": {
+    "@types/randomcolor": "^0.5.6",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
