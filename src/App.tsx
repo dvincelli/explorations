@@ -8,6 +8,7 @@ import Editor from './components/editor/Editor';
 import './App.css'
 import { useSyncedStore } from "@syncedstore/react";
 import { store, webrtcProvider } from "./store";
+import NodeWidget from "./components/widget/NodeWidget";
 
 function App() {
   const state = useSyncedStore(store);
@@ -23,8 +24,12 @@ function App() {
       color: color,
     });
   */
-  const addNode = () => {
-   state.notebooks[0]?.nodes.push({title: 'Change Me', type: 'TextNode', content: ''})
+  const prependNode = () => {
+   state.notebooks[0]?.nodes.unshift({title: 'Edit Me', type: 'TextNode', body: ''})
+  };
+
+  const appendNode = () => {
+   state.notebooks[0]?.nodes.push({title: 'Change Me', type: 'TextNode', body: ''})
   };
 
   return (
@@ -32,10 +37,11 @@ function App() {
       <header>
         <p>Collaborative Calculator</p>
       </header>
-      <button onClick={addNode}>+</button>
+      <button onClick={prependNode}>+</button>
       {
-        state.notebooks[0]?.nodes.map( (node) =>  <div>{node.title}</div> ) // <Editor awareness={webrtcProvider?.awareness} yText={""} /> )
+        state.notebooks[0]?.nodes.map( (node) =>  <NodeWidget node={node}></NodeWidget> ) // <Editor awareness={webrtcProvider?.awareness} yText={""} /> )
       }
+      <button onClick={appendNode}>+</button>
     </div>
   )
 }
