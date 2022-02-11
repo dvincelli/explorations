@@ -7,6 +7,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@syncedstore/core": "^0.3.7",
+    "@syncedstore/react": "^0.3.5",
     "parser-ts": "^0.6.16",
     "quill": "^1.3.7",
     "quill-cursors": "^3.1.0",

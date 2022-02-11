@@ -1,4 +1,4 @@
-import { Ref, useEffect, useRef, useState } from 'react'
+import { Fragment, Ref, useEffect, useRef, useState } from 'react'
 import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { WebrtcProvider } from 'y-webrtc';
@@ -12,7 +12,7 @@ interface EditorProps {
 }
 
 function Editor({ awareness, yText } : EditorProps) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('change me');
   const [isEditing, setIsEditing] = useState(false);
 
   const editorRef = useRef(null);
@@ -21,7 +21,7 @@ function Editor({ awareness, yText } : EditorProps) {
   //     Y.Array<Y.Text>
   
   useEffect(() => {
-
+      console.log(yText);
     if (editorRef && editorRef.current) {
       try {
         const editor : ReactQuill = editorRef.current;
@@ -40,8 +40,14 @@ function Editor({ awareness, yText } : EditorProps) {
     }
   }, [editorRef]);
 
-  return isEditing === true ? 
-    <ReactQuill theme="snow" value={value} onChange={setValue} ref={editorRef} /> : <p>{value}</p>
+  if (isEditing) {
+    return <ReactQuill theme="snow" value={value} onChange={setValue} ref={editorRef} />
+  } else {
+    return <Fragment>
+            <span>wtf</span>
+            <div onClick={() => { setIsEditing(false) } }>{yText.toJSON()}</div>
+         </Fragment>
+  }
 }
 
 export default Editor
