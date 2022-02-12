@@ -9,6 +9,8 @@ import './App.css'
 import { useSyncedStore } from "@syncedstore/react";
 import { store, webrtcProvider } from "./store";
 import NodeWidget from "./components/widget/NodeWidget";
+import { SyncedText } from "@syncedstore/core";
+
 
 function App() {
   const state = useSyncedStore(store);
@@ -25,11 +27,14 @@ function App() {
     });
   */
   const prependNode = () => {
-   state.notebooks[0]?.nodes.unshift({title: 'Edit Me', type: 'TextNode', body: ''})
+    // const body = new SyncedText('');
+    state.notebooks[0].nodes[0].body.insert(0, Math.random().toString()); // unshift({title: 'Edit Me', type: 'TextNode', body: body})
+    // state.notebooks[0]?.nodes.unshift({title: 'Edit Me', type: 'TextNode', body: body})
   };
 
   const appendNode = () => {
-   state.notebooks[0]?.nodes.push({title: 'Change Me', type: 'TextNode', body: ''})
+    const body = new SyncedText('');
+    state.notebooks[0]?.nodes.push({title: 'Change Me', type: 'TextNode', body: body})
   };
 
   return (
@@ -39,7 +44,7 @@ function App() {
       </header>
       <button onClick={prependNode}>+</button>
       {
-        state.notebooks[0]?.nodes.map( (node) =>  <NodeWidget node={node}></NodeWidget> ) // <Editor awareness={webrtcProvider?.awareness} yText={""} /> )
+        state.notebooks[0]?.nodes.map( (node) =>  <NodeWidget node={node} awareness={webrtcProvider.awareness}></NodeWidget> ) // <Editor awareness={webrtcProvider?.awareness} yText={""} /> )
       }
       <button onClick={appendNode}>+</button>
     </div>

@@ -1,0 +1,5 @@
+ .NodeWidget {
+    height: 2rem;
+    width: 40rem;
+    border: 1px dashed red;
+  }
