@@ -1,13 +1,12 @@
 import { Fragment, Ref, useCallback, useEffect, useRef, useState } from 'react'
 import ReactQuill, {Quill} from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
 import { WebrtcProvider } from 'y-webrtc';
 import { QuillBinding } from 'y-quill'
 import * as Y from "yjs";
 import React from 'react';
 import { string } from 'parser-ts';
 import { store, Node } from '../../store';
-import './NodeWidget.css'
 import { useSyncedStore } from '@syncedstore/react';
 
 
@@ -21,14 +20,10 @@ function NodeWidget({ awareness, node } : NodeWidgetProps) {
 
     const [ rerender, setRerender ] = useState(false);
     const [ value, setValue ] = useState(node.body.toString());
-    const [ isEditing, setIsEditing ] = useState(false);
 
     useEffect( () => {
-        console.log('setting up observer');
-
         node.body.observe( (yTextEvent, yTransaction) => {
-            console.log(node.body.toString());
-            setRerender(!rerender);
+            //setRerender(!rerender);
             if (!editorRef?.current?.getEditor) {
                 setValue(node.body.toString());
             }
@@ -36,9 +31,6 @@ function NodeWidget({ awareness, node } : NodeWidgetProps) {
 
 
     useEffect(() => {
-        console.log('effect running');
-        console.log(editorRef);
-
         if (editorRef?.current?.getEditor) {
 
             try {
@@ -57,15 +49,9 @@ function NodeWidget({ awareness, node } : NodeWidgetProps) {
             //}
             };
         }
-    }, [isEditing]); // , editorRef]);
+    }, [editorRef]);
 
-    if (isEditing) {
-        return <ReactQuill theme="snow" value={value} onChange={setValue} ref={editorRef} />
-    } else {
-        return <div className="NodeWidget" onClick={ () => setIsEditing(true) } ref={editorRef}>
-            <p>{value}</p>
-        </div>
-    }
+    return <ReactQuill className="min-h-24 h-auto text-cyan-50 border-2 border-cyan-50 p-2 m-3" theme="bubble" value={value} onChange={setValue} ref={editorRef} />
 }
 
 export default NodeWidget

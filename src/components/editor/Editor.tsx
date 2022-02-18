@@ -21,7 +21,6 @@ function Editor({ awareness, yText } : EditorProps) {
   //     Y.Array<Y.Text>
   
   useEffect(() => {
-      console.log(yText);
     if (editorRef && editorRef.current) {
       try {
         const editor : ReactQuill = editorRef.current;
@@ -40,14 +39,7 @@ function Editor({ awareness, yText } : EditorProps) {
     }
   }, [editorRef]);
 
-  if (isEditing) {
-    return <ReactQuill theme="snow" value={value} onChange={setValue} ref={editorRef} />
-  } else {
-    return <Fragment>
-            <span>wtf</span>
-            <div onClick={() => { setIsEditing(false) } }>{yText.toJSON()}</div>
-         </Fragment>
-  }
+  return <ReactQuill theme="snow" value={value} onChange={setValue} ref={editorRef} readOnly={!isEditing} />
 }
 
 export default Editor

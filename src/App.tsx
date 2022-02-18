@@ -1,11 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import logo from './logo.svg'
-import { WebrtcProvider } from 'y-webrtc';
 import RandomColor from 'randomcolor';
-import * as Y from "yjs";
 import React from 'react';
-import Editor from './components/editor/Editor';
-import './App.css'
 import { useSyncedStore } from "@syncedstore/react";
 import { store, webrtcProvider } from "./store";
 import NodeWidget from "./components/widget/NodeWidget";
@@ -26,11 +20,10 @@ function App() {
       color: color,
     });
   */
-  const prependNode = () => {
-    // const body = new SyncedText('');
-    state.notebooks[0].nodes[0].body.insert(0, Math.random().toString()); // unshift({title: 'Edit Me', type: 'TextNode', body: body})
-    // state.notebooks[0]?.nodes.unshift({title: 'Edit Me', type: 'TextNode', body: body})
-  };
+  const newNotebook = () => {
+    const notebook = {title: 'New Notebook', nodes: []}
+    state.notebooks.push(notebook)
+  }
 
   const appendNode = () => {
     const body = new SyncedText('');
@@ -38,15 +31,17 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="bg-stone-900 flex flex-col">
+      <div className="m-auto sm:w-5/5 lg:w-3/5 justify-center">
       <header>
         <p>Collaborative Calculator</p>
       </header>
-      <button onClick={prependNode}>+</button>
+      <button className="bg-stone-300 text-stone-700 rounded-sm w-auto m-3 p-3 hover:bg-lime-100">New Notebook</button>
       {
         state.notebooks[0]?.nodes.map( (node) =>  <NodeWidget node={node} awareness={webrtcProvider.awareness}></NodeWidget> ) // <Editor awareness={webrtcProvider?.awareness} yText={""} /> )
       }
-      <button onClick={appendNode}>+</button>
+      <button className="bg-stone-300 text-stone-700 shadow-sm w-24 rounded-sm m-3 p-3 hover:bg-lime-100" onClick={appendNode}>+</button>
+      </div>
     </div>
   )
 }
